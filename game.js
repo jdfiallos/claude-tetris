@@ -301,4 +301,15 @@ document.addEventListener('keydown', e => {
 
 restartBtn.addEventListener('click', init);
 
+// ---- Theme toggle ----
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = themeToggle.querySelector('.theme-icon');
+
+// Default to dark mode (no class needed)
+// Toggle between light and dark
+themeToggle.addEventListener('click', () => {
+  const isLight = document.body.classList.toggle('light');
+  themeIcon.textContent = isLight ? '☀️' : '🌙';
+});
+
 init();
