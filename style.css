@@ -19,6 +19,13 @@ body {
   position: relative;
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
 .game-title {
   text-align: center;
   font-size: 32px;
@@ -26,7 +33,81 @@ body {
   letter-spacing: 8px;
   color: #7aa2f7;
   text-shadow: 0 0 20px rgba(122, 162, 247, 0.5);
-  margin-bottom: 16px;
+}
+
+.theme-toggle {
+  background: #22223a;
+  border: 1px solid #3a3a5a;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.theme-toggle:hover {
+  background: #3a3a5a;
+}
+
+/* ---- Light mode ---- */
+body.light {
+  background: #f0f0f5;
+  color: #1a1a25;
+}
+
+body.light #board {
+  border-color: #ccc;
+  background: #fff;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+}
+
+body.light #next-canvas {
+  border-color: #ccc;
+  background: #fff;
+}
+
+body.light .label {
+  color: #888;
+}
+
+body.light .value {
+  color: #333;
+}
+
+body.light kbd {
+  background: #e0e0e0;
+  border-color: #ccc;
+  color: #555;
+}
+
+body.light .controls li {
+  color: #666;
+}
+
+body.light .overlay {
+  background: rgba(240, 240, 245, 0.75);
+}
+
+body.light #overlay-score {
+  color: #333;
+}
+
+body.light #restart-btn {
+  background: #333;
+  color: #f0f0f5;
+}
+
+body.light #restart-btn:hover {
+  background: #555;
+}
+
+body.light .theme-toggle {
+  background: #e0e0e0;
+  border-color: #ccc;
+}
+
+body.light .theme-toggle:hover {
+  background: #ccc;
 }
 
 .game-container {
