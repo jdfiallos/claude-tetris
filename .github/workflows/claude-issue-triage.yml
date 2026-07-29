@@ -1,0 +1,73 @@
+name: Claude Issue Triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  triage-issue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Issue Triage
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # Cualquier persona puede abrir un issue, no solo quienes tienen
+          # acceso de escritura al repo, así que permitimos que dispare el triage.
+          allowed_non_write_users: "*"
+          claude_args: |
+            --allowed-tools "Bash(gh label list:*),Bash(gh issue view:*),Bash(gh issue edit:*),Bash(gh issue comment:*)"
+          prompt: |
+            Eres un asistente de triage de issues para este repositorio (un juego de Tetris en JavaScript/HTML/CSS).
+
+            REPO: ${{ github.repository }}
+            ISSUE_NUMBER: ${{ github.event.issue.number }}
+
+            Tu tarea tiene dos partes: (1) asignar labels apropiados y (2) publicar un diagnóstico
+            general del problema que el equipo usará después para implementar la solución.
+
+            PASO 1 — Contexto:
+            - Ejecuta `gh label list` para ver los labels disponibles en el repo.
+            - Ejecuta `gh issue view ${{ github.event.issue.number }} --comments` para leer el
+              título, cuerpo y comentarios existentes del issue.
+            - Revisa el código relevante del repo (game.js, index.html, style.css) para entender
+              qué área del juego está involucrada (lógica del juego, renderizado, controles,
+              estilos, etc.).
+
+            PASO 2 — Labels:
+            - Elige y aplica SOLO labels que ya existan en la lista obtenida en el paso 1. No
+              inventes ni crees labels nuevos.
+            - Aplica los labels con: `gh issue edit ${{ github.event.issue.number }} --add-label "nombre-label"`
+            - Si el issue ya tiene todos los labels correctos, no hagas cambios de labels.
+
+            PASO 3 — Diagnóstico:
+            - Redacta en español un diagnóstico general y conciso que incluya:
+              1. Resumen del problema.
+              2. Causa probable (basada en el código revisado).
+              3. Archivo(s)/área del código afectada.
+              4. Sugerencia de próximos pasos para implementar la solución.
+            - El diagnóstico debe iniciar exactamente con la línea `<!-- claude-diagnosis -->`
+              (marcador oculto, no visible en el render de GitHub) seguida del contenido.
+            - Revisa los comentarios obtenidos en el paso 1: si alguno empieza con
+              `<!-- claude-diagnosis -->`, ya existe un diagnóstico previo tuyo.
+              - Si existe: actualízalo con
+                `gh issue comment ${{ github.event.issue.number }} --edit-last --body "..."`
+                (no crees un comentario nuevo, evita duplicar diagnósticos).
+              - Si no existe: créalo con
+                `gh issue comment ${{ github.event.issue.number }} --body "..."`.
+
+            IMPORTANTE:
+            - No publiques ningún otro comentario aparte del diagnóstico.
+            - No te comuniques directamente con el autor del issue ni hagas preguntas en el
+              comentario, esto es un análisis automático para uso interno del equipo.
