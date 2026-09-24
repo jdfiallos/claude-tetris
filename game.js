@@ -4,6 +4,31 @@ const COLS = 10;
 const ROWS = 20;
 const BLOCK = 30;
 
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gh500secret", "gh500secret.csproj", "{88B98CE2-DFDD-2F51-423D-17E945466951}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88B98CE2-DFDD-2F51-423D-17E945466951}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88B98CE2-DFDD-2F51-423D-17E945466951}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88B98CE2-DFDD-2F51-423D-17E945466951}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88B98CE2-DFDD-2F51-423D-17E945466951}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0BADBA75-E803-4F74-AE50-C79C9B8542D3}
+	EndGlobalSection
+EndGlobal
+
 const COLORS = [
   null,
   '#4dd0e1', // I - cyan
